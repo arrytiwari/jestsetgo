@@ -1,4 +1,4 @@
-# Tripma
+# JetsetGO!!
 
 <br/>
 This is a Flight Booking UI template built using React and Tailwind CSS. It provides a sleek and user-friendly interface for users to search and book flights. The template is fully responsive and can be easily customized to fit your specific needs.

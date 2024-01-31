@@ -18,11 +18,11 @@ To use this template, you need to have the following installed on your machine:
 - Node.js (version ....)
 - npm (version ....)
 
-## Installation
+<!-- ## Installation
 
 1. Clone the repository: git clone https://github.com/PrtHub/Tripma.git
 2. Install the dependencies: npm install
-3. To start the development server and view the template in your browser, run the following command: npm run dev
+3. To start the development server and view the template in your browser, run the following command: npm run dev -->
 
 ## Customization
 

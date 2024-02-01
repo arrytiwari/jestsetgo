@@ -8,7 +8,6 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useFilterContext } from "../container/provider/conntextprovider";
-import { suggestions } from "../data/constant";
 
 
 const AutoSuggest = (initialValue) => {
@@ -19,10 +18,11 @@ const AutoSuggest = (initialValue) => {
   const handleInputChange = (event) => {
     const inputValue = event.target.value.toLowerCase();
     setInput(inputValue);
-
+    const suggestions = ['Mumbai', 'Delhi', 'Chennai']
     const filteredSuggestions = suggestions.filter((suggestion) =>
       suggestion.toLowerCase().startsWith(inputValue)
-    );
+    ) || suggestions;
+  
     setMatchingSuggestions(filteredSuggestions);
   };
 
@@ -50,8 +50,6 @@ const Hero = () => {
  
   // const navigate = useNavigate();
   const [openDate, setOpenDate] = useState(false);
-  
-
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
@@ -89,7 +87,7 @@ const Hero = () => {
       <header className="flex flex-col items-center relative w-full h-[529px] px-7 py-4">
         <div className="flex justify-center items-center">
           <h1 className="font-extrabold text-5xl sm:text-7xl md:text-8xl text-center leading-[55px] sm:leading-[70px] md:leading-[90px] text-gradient">
-            It's more than <br /> just a trip
+            Thriving  through <br /> the world
           </h1>
         </div>
 

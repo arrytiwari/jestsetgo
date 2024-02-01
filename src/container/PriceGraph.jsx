@@ -92,7 +92,7 @@ const PriceGraph = () => {
                   $750, but could rise 18% to $885 in two weeks.
                 </p>
                 <p className="text-[#A1B0CC] ">
-                  Tripma analyzes thousands of flights, prices, and trends to
+                  JETSETGO analyzes thousands of flights, prices, and trends to
                   ensure you get the best deal.
                 </p>
               </div>

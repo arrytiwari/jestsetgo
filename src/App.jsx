@@ -16,10 +16,12 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+
+
 const App = () => {
   return (
     <ContextProvider>
-
       <div className="font-Nunito overflow-hidden max-w-[1440px] mx-auto">
         <Navbar />
         <Routes>

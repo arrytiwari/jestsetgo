@@ -30,6 +30,6 @@ The Flight Booking UI template is highly customizable. You can modify the existi
 
 - src/App.js: The main entry point of the application.
 - src/components & src/container: Directory containing reusable React components.
-- src/assets: All the icons, images, logos are here
+
 
 

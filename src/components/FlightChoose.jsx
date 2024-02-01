@@ -9,16 +9,16 @@ import {
   united,
 } from "../assets/logo";
 import { FlightCard, PriceDetails, PriceGraph } from "../container";
-import { Link } from "react-router-dom";
+import { Link, useNavigation } from "react-router-dom";
 import { useFilterContext } from "../container/provider/conntextprovider";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-
+import {useLocation} from "react-router-dom";
 import flightData from "../../flights.json";
 
 const FlightChoose = () => {
   const [priceShown, setPriceShow] = useState(true);
-
+const navigate=useLocation();
   const { date, source, destination } = useFilterContext();
   const [flightsData, setFlightsData] = useState([]);
   const [currentFlight, setCurrentFlight] = useState(null);
@@ -66,7 +66,7 @@ const FlightChoose = () => {
       });
       setFlightsData(filteredFlights);
     }
-  }, [destination, source ]);
+  });
 
   return (
     <>

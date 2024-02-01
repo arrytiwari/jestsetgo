@@ -32,10 +32,4 @@ The Flight Booking UI template is highly customizable. You can modify the existi
 - src/components & src/container: Directory containing reusable React components.
 - src/assets: All the icons, images, logos are here
 
-## Deployment
 
-- To build the optimized production-ready version of the template, run the following command: npm run build
-This will create a build directory with the optimized and minified assets. You can then deploy this directory to your hosting platform of choice.
-
-## Contributing
-Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request. Make sure to follow the existing coding style and guidelines.

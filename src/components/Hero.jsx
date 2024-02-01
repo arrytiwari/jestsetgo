@@ -5,9 +5,9 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
 // import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useFilterContext } from "../container/provider/conntextprovider";
 import { suggestions } from "../data/constant";
 
 
@@ -31,6 +31,10 @@ const AutoSuggest = (initialValue) => {
     setIsOpen(false);
   };
 
+  
+
+
+
   return {
     input,
     matchingSuggestions,
@@ -43,15 +47,10 @@ const AutoSuggest = (initialValue) => {
 }
 
 const Hero = () => {
+ 
   // const navigate = useNavigate();
   const [openDate, setOpenDate] = useState(false);
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
+  
 
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
@@ -71,6 +70,19 @@ const Hero = () => {
   const departureSuggest = AutoSuggest('');
   const arrivalSuggest = AutoSuggest('');
   
+  const {setDestination,setDate,date,setSource}=useFilterContext()
+
+  useEffect(() => {
+    setDestination(arrivalSuggest.input)
+    
+  },[arrivalSuggest.input]);
+
+  useEffect(() => {
+    setSource(departureSuggest.input)
+    
+  },[departureSuggest.input]);
+
+ 
 
   return (
     <>

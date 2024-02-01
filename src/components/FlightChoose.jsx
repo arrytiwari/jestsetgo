@@ -10,9 +10,67 @@ import {
 } from "../assets/logo";
 import { FlightCard, PriceDetails, PriceGraph } from "../container";
 import { Link } from "react-router-dom";
+import { useFilterContext } from "../container/provider/conntextprovider";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+
+import flightData from "../../flights.json";
 
 const FlightChoose = () => {
   const [priceShown, setPriceShow] = useState(true);
+
+  const { date, source, destination,airline } = useFilterContext();
+  const [flightsData, setFlightsData] = useState([]);
+  const [currentFlight, setCurrentFlight] = useState(null);
+ 
+
+  const {data} = useQuery({
+    queryKey: ['flightData'],
+    queryFn: () =>
+      fetch('https://api.npoint.io/4829d4ab0e96bfab50e7').then((res) =>
+        res.json(),
+      ),
+  });
+ 
+  useEffect(() => {
+    const apiFlightData = data?.data;
+    if (apiFlightData && apiFlightData.result.length > 0) {
+      const filteredFlights = flightData.data.result.filter((flight) => {
+        // Implement your filter logic here
+        const isMatchingSource = source
+          ? flight.displayData.source.airport.cityName.toLowerCase()=== source.toLowerCase()
+          : true;
+        const isMatchingDestination = destination
+          ? flight.displayData.destination.airport.cityName.toLowerCase() === destination.toLowerCase()
+          : true;
+          const isMatchingAirline = airline
+          ? (flight.displayData.airlines || []).some((
+              (airline1) => airline1.airlineName.toLowerCase() === airline.toLowerCase()
+            ))
+          : true;
+        
+        // console.log(
+        //   flight.displayData.source.airport.cityName,
+        //   source,
+        //   "source"
+        // );
+        // console.log(
+        //   flight.displayData.destination.airport.cityName,
+        //   destination,
+        //   "destination"
+        // );
+       
+        console.log(isMatchingSource, isMatchingDestination, "matching");
+
+        // const isMatchingSourceDate = date[0] ? flight.displayData.source.depTime.includes(date[0]) : true;
+        // const isMatchingDestinationDate = date[1] ? flight.displayData.destination.arrTime.includes(date[1]) : true;
+
+        // Return flights where all conditions are true
+        return isMatchingSource && isMatchingDestination && isMatchingAirline;
+      });
+      setFlightsData(filteredFlights);
+    }
+  }, [destination, source ,airline]);
 
   return (
     <>
@@ -25,36 +83,36 @@ const FlightChoose = () => {
             </h1>
           </div>
           <div className="w-full flex flex-col items-start justify-start  border-[1px] border-[#E9E8FC] rounded-xl">
-            <div
-              className="w-full cursor-pointer border-b-[1px] border-[#E9E8FC] hover:bg-[#F6F6FE] transition-all duration-300 focus:bg-[#F6F6FE]"
-              onClick={() => setPriceShow(false)}
-            >
-              <FlightCard
-                img={hawaiian}
-                duration="16h 45m"
-                name="Hawaiian Airlines"
-                time="7:00AM - 4:15PM"
-                stop="1 stop"
-                hnl="2h 45m in HNL"
-                price="$624"
-                trip="round trip"
-              />
-            </div>
-            <div
-              className="w-full cursor-pointer border-b-[1px] border-[#E9E8FC]  hover:bg-[#F6F6FE] transition-all duration-300 focus:bg-[#F6F6FE]"
-              onClick={() => setPriceShow(false)}
-            >
-              <FlightCard
-                img={japan}
-                duration="18h 22m"
-                name="Japan Airlines"
-                time="7:35AM - 12:15PM"
-                stop="1 stop"
-                hnl="50m in HKG"
-                price="$663"
-                trip="round trip"
-              />
-            </div>
+            {flightsData &&
+              flightsData.length > 0 &&
+              flightsData.map((flight) => {
+                return (
+                  <div
+                    className="w-full cursor-pointer border-b-[1px] border-[#E9E8FC] hover:bg-[#F6F6FE] transition-all duration-300 focus:bg-[#F6F6FE]"
+                    onClick={() => {
+                      setPriceShow(false);
+                      setCurrentFlight(flight);
+                      console.log(currentFlight, "flight", flight);
+                    }}
+                    key={flight.id}
+                  >
+                    <FlightCard
+                      key={flight.id}
+                      img={hawaiian}
+                      arrival={flight.displayData.destination.airport.cityName || ""}
+              departure={flight.displayData.source.airport.cityName || ""}
+                      duration={flight.displayData.totalDuration}
+                      name={flight.displayData.airlines[0].airlineName || ""}
+                      time={`${flight.displayData.source.depTime} - ${flight.displayData.destination.arrTime}`}
+                      stop={`${flight.displayData.stopInfo}`}
+                      // hnl={`${flight.displayData.stopCount}h ${flight.displayData.stopDuration}m in ${flight.displayData.stopCity}`}
+                      hnl={`INR ${flight.fare}`}
+                      price={flight.displayData.price}
+                      // trip="round trip"
+                    />
+                  </div>
+                );
+              })}
             <div
               className="w-full cursor-pointer border-b-[1px] border-[#E9E8FC]  hover:bg-[#F6F6FE] transition-all duration-300 focus:bg-[#F6F6FE]"
               onClick={() => setPriceShow(false)}
@@ -70,64 +128,34 @@ const FlightChoose = () => {
                 trip="round trip"
               />
             </div>
-            <div
-              className="w-full cursor-pointer border-b-[1px] border-[#E9E8FC]  hover:bg-[#F6F6FE] transition-all duration-300 focus:bg-[#F6F6FE]"
-              onClick={() => setPriceShow(false)}
-            >
-              <FlightCard
-                img={quantas}
-                duration="15h 45m"
-                name="Qantas Airlines"
-                time="10:55 AM - 8:15 PM"
-                stop="Nonstop"
-                price="$839"
-                trip="round trip"
-              />
-            </div>
-            <div
-              className="w-full cursor-pointer  hover:bg-[#F6F6FE] transition-all duration-300 focus:bg-[#F6F6FE]"
-              onClick={() => setPriceShow(false)}
-            >
-              <FlightCard
-                img={united}
-                duration="16h 05m"
-                name="United Airlines"
-                time="11:15 AM - 7:45 PM"
-                stop="Nonstop"
-                price="$837"
-                trip="round trip"
-              />
-            </div>
-            <div
-              className="w-full cursor-pointer  hover:bg-[#F6F6FE] transition-all duration-300 focus:bg-[#F6F6FE]"
-              onClick={() => setPriceShow(false)}
-            >
-              <FlightCard
-                img={france}
-                duration="18h 30m"
-                name="France Airlines"
-                time="10:15 AM - 8:45 PM"
-                stop="Nonstop"
-                price="$964"
-                trip="round trip"
-              />
-            </div>
           </div>
           <div className="w-full lg:mt-12">
             <img src={map} alt="map" className="w-full h-full object-cover" />
           </div>
         </div>
 
-        {priceShown && (
-         <PriceGraph/>
-        )}
+        {/* {priceShown && <PriceGraph />} */}
 
-        {!priceShown && (
+        {currentFlight && (
           <div className="mt-10 flex flex-col gap-10 justify-end items-start lg:items-end">
-            <PriceDetails />
-            <Link to='/passenger-info' className="mt-5">
-           <button className="text-[#605DEC] border-2 border-[#605DEC] py-2 px-3 rounded hover:bg-[#605DEC] hover:text-white transition-all duration-200">Save & Close</button>
-        </Link>
+            <PriceDetails 
+              key={currentFlight.id}
+              img={hawaiian}
+              arrival={currentFlight.displayData.destination.airport.cityName || ""}
+              departure={currentFlight.displayData.source.airport.cityName || ""}
+              flightCode={currentFlight.displayData.airlines[0].flightNumber || ""}
+              duration={currentFlight.displayData.totalDuration}
+              name={currentFlight.displayData.airlines[0].airlineName || ""}
+              time={`${currentFlight.displayData.source.depTime} - ${currentFlight.displayData.destination.arrTime}`}
+              stop={`${currentFlight.displayData.stopInfo}`}
+              // hnl={`${flight.displayData.stopCount}h ${flight.displayData.stopDuration}m in ${flight.displayData.stopCity}`}
+              fee={`${currentFlight.fare}`}
+            />
+            <Link to="/passenger-info" className="mt-5">
+              <button className="text-[#605DEC] border-2 border-[#605DEC] py-2 px-3 rounded hover:bg-[#605DEC] hover:text-white transition-all duration-200">
+                Save & Close
+              </button>
+            </Link>
           </div>
         )}
       </div>

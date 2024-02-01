@@ -5,10 +5,9 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
 // import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-import { suggestions } from "../data/constant";
+import { useFilterContext } from "../container/provider/conntextprovider";
 
 
 const AutoSuggest = (initialValue) => {
@@ -19,10 +18,11 @@ const AutoSuggest = (initialValue) => {
   const handleInputChange = (event) => {
     const inputValue = event.target.value.toLowerCase();
     setInput(inputValue);
-
+    const suggestions = ['Mumbai', 'Delhi', 'Chennai']
     const filteredSuggestions = suggestions.filter((suggestion) =>
       suggestion.toLowerCase().startsWith(inputValue)
-    );
+    ) || suggestions;
+  
     setMatchingSuggestions(filteredSuggestions);
   };
 
@@ -30,6 +30,10 @@ const AutoSuggest = (initialValue) => {
     setInput(suggestion);
     setIsOpen(false);
   };
+
+  
+
+
 
   return {
     input,
@@ -43,16 +47,9 @@ const AutoSuggest = (initialValue) => {
 }
 
 const Hero = () => {
+ 
   // const navigate = useNavigate();
   const [openDate, setOpenDate] = useState(false);
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
@@ -71,13 +68,26 @@ const Hero = () => {
   const departureSuggest = AutoSuggest('');
   const arrivalSuggest = AutoSuggest('');
   
+  const {setDestination,setDate,date,setSource}=useFilterContext()
+
+  useEffect(() => {
+    setDestination(arrivalSuggest.input)
+    
+  },[arrivalSuggest.input]);
+
+  useEffect(() => {
+    setSource(departureSuggest.input)
+    
+  },[departureSuggest.input]);
+
+ 
 
   return (
     <>
       <header className="flex flex-col items-center relative w-full h-[529px] px-7 py-4">
         <div className="flex justify-center items-center">
           <h1 className="font-extrabold text-5xl sm:text-7xl md:text-8xl text-center leading-[55px] sm:leading-[70px] md:leading-[90px] text-gradient">
-            It's more than <br /> just a trip
+            Thriving  through <br /> the world
           </h1>
         </div>
 

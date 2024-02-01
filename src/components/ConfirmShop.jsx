@@ -10,7 +10,7 @@ const ConfirmShop = () => {
           Shop<span className="text-[#605DEC]"> hotels</span>
         </h1>
         <p className="text-[#7C8DB0] text-sm sm:text-base font-medium">
-          Tripma partners with thousands of hotels to get you the best deal.
+          JetsetGO partners with thousands of hotels to get you the best deal.
           Save up to 30% when you add a hotel to your trip.
         </p>
       </div>
@@ -108,7 +108,7 @@ const ConfirmShop = () => {
         Find unique<span className="text-[#605DEC]"> experiences</span>
         </h1>
         <p className="text-[#7C8DB0] text-sm sm:text-base font-medium">
-        Find events and authentic cultrual experiences available exclusively to Tripma users.
+        Find events and authentic cultrual experiences available exclusively to  users.
         </p>
       </div>
       <div className="w-full h-full flex flex-col items-start gap-10 mt-14">

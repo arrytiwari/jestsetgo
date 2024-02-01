@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Footer, Navbar } from "./components";
+import  ContextProvider  from "./container/provider/conntextprovider";
+
 import {
   Confirm,
   FlightExplore,
@@ -14,9 +16,12 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+
+
 const App = () => {
   return (
-    <>
+    <ContextProvider>
       <div className="font-Nunito overflow-hidden max-w-[1440px] mx-auto">
         <Navbar />
         <Routes>
@@ -43,7 +48,7 @@ const App = () => {
           theme="dark"
         />
       </div>
-    </>
+    </ContextProvider>
   );
 };
 

@@ -2,7 +2,7 @@
 
 
 
-const FlightCard = ({ img, duration, name, time, stop, trip, price, hnl}) => {
+const FlightCard = ({ img, duration, name, time, stop, trip, price, hnl, arrival ,departure }) => {
   return (
     <>
      <div className="w-full flex flex-row items-start justify-between gap-7 p-4 ">
@@ -13,8 +13,12 @@ const FlightCard = ({ img, duration, name, time, stop, trip, price, hnl}) => {
              <p className="text-[#7C8DB0] font-normal text-xs   md:text-base">{name}</p>
             </div>
          </div>
+         <div className="">{departure}</div>
          <div className="flex items-start justify-start">
             <p className="text-[#27273F] font-normal text-xs  md:text-base">{time}</p>
+         </div>
+         <div className="">
+          {arrival}
          </div>
          <div className="flex flex-col  items-center sm:items-end justify-start">
          <p className="text-[#27273F] font-normal text-xs   md:text-base">{stop}</p>

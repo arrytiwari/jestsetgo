@@ -44,7 +44,7 @@ const Payment = () => {
           <div className="flex flex-col items-start gap-2 w-full">
             <h1 className="titleh1">Payment method</h1>
             <p className="text-[#7C8DB0] text-base font-normal">
-              Select a payment method below. Tripma processes your payment
+              Select a payment method below. JESTETGO processes your payment
               securely with end-to-end encryption.
             </p>
           </div>
@@ -109,7 +109,7 @@ const Payment = () => {
             <div className="flex flex-col items-start justify-start gap-2">
               <h2 className="text-[#6E7491] text-xl">Create an account</h2>
               <p className="text-[#7C8DB0] text-base font-normal">
-                Tripma is free to use as a guest, but if you create an account
+                JETSETGO is free to use as a guest, but if you create an account
                 today, you can save and view flights, manage your trips, earn
                 rewards, and more.
               </p>
@@ -158,7 +158,7 @@ const Payment = () => {
               <p className="text-[#7C8DB0] text-base font-normal">
                 This flight has a flexible cancellation policy. If you cancel or
                 change your flight up to 30 days before the departure date, you
-                are eligible for a free refund. All flights booked on Tripma are
+                are eligible for a free refund. All flights booked on it are
                 backed by our satisfaction guarantee, however cancellation
                 policies vary by airline. See the{" "}
                 <span className="text-[#605CDE]">

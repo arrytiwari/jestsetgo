@@ -5,22 +5,20 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
 import { useState } from "react";
+import { useFilterContext } from "../container/provider/conntextprovider";
 
 const SelectDetails = () => {
   const [openDate, setOpenDate] = useState(false);
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-
+  const {date,setDate,setSource,setDestination,destination,source,airline,setAirline} = useFilterContext();
+  const [localSource, setLocalSource] = useState(source);
+  const [localDestination, setLocalDestination] = useState(destination);
+  const [localAirline, setLocalAirline] = useState(airline);
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
     minor: 0,
   });
+  
 
   const handleOptions = (name, oparetion) => {
     setOptions((prev) => {
@@ -42,6 +40,8 @@ const SelectDetails = () => {
                 type="text"
                 placeholder="SFO"
                 className="outline-none cursor-not-allowed border-none ml-2 placeholder:text-[#7C8DB0] placeholder:text-sm placeholder:leading-6"
+                value={localSource}
+                onChange={(e)=>setLocalSource(e.target.value)}
               />
             </div>
 
@@ -51,6 +51,8 @@ const SelectDetails = () => {
                 type="text"
                 placeholder="NRT"
                 className="outline-none cursor-not-allowed border-none ml-2 placeholder:text-[#7C8DB0] placeholder:text-sm placeholder:leading-6"
+                value={localDestination}
+                onChange={(e)=>setLocalDestination(e.target.value)}
               />
             </div>
 
@@ -60,7 +62,7 @@ const SelectDetails = () => {
                 className="text-[#7C8DB0] text-sm leading-6 ml-2 cursor-pointer"
                 onClick={() => setOpenDate(!openDate)}
               >
-                {openDate
+                {date
                   ? `${format(date[0].startDate, "dd/MM/yyyy")} to ${format(
                       date[0].endDate,
                       "dd/MM/yyyy"
@@ -70,7 +72,9 @@ const SelectDetails = () => {
               {openDate && (
                 <DateRange
                   editableDateInputs={true}
-                  onChange={(item) => setDate([item.selection])}
+                  onChange={(item) => {setDate([item.selection])
+                  openDate(false)
+                  }}
                   moveRangeOnFirstSelection={false}
                   ranges={date}
                   className="absolute top-64 lg:top-20 z-10 "
@@ -135,7 +139,12 @@ const SelectDetails = () => {
             </div>
 
             <div className="w-full lg:w-[96px] ">
-              <button className="w-full bg-[#605DEC] text-[#FAFAFA] text-lg leading-6 h-[48px] px-5   rounded-b-[4px] lg:rounded-r-[4px]">
+              <button className="w-full bg-[#605DEC] text-[#FAFAFA] text-lg leading-6 h-[48px] px-5   rounded-b-[4px] lg:rounded-r-[4px]"
+              onClick={()=>{
+                setSource(localSource)
+                setDestination(localDestination)
+              }}
+              >
                 Search
               </button>
             </div>
@@ -156,38 +165,20 @@ const SelectDetails = () => {
               <option value="$300-600">$300-600</option>
               <option value="$600-1000">$600-1000</option>
             </select>
-            <select
-              name="shops"
-              id="shops"
-              className="border-[1px] border-[#CBD4E6] bg-white text-[#27273F] p-1 cursor-pointer"
-            >
-              <option value="shops" className="">
-                Shops
-              </option>
-            </select>
-            <select
-              name="times"
-              id="times"
-              className="border-[1px] border-[#CBD4E6] bg-white text-[#27273F] p-1 cursor-pointer"
-            >
-              <option value="times" className="">
-                Times
-              </option>
-              <option value="7 AM - 4 PM">7 AM - 4 PM</option>
-              <option value="8 AM - 12 PM">8 AM - 12 PM</option>
-              <option value="6 PM - 10 PM">6 PM - 10 PM</option>
-            </select>
+          
             <select
               name="airlines"
               id="airlines"
+              value={localAirline}
+  onChange={(e) => setLocalAirline(e.target.value)}
               className="border-[1px] border-[#CBD4E6] bg-white text-[#27273F] p-1 cursor-pointer"
             >
               <option value="airlines" className="">
                 Airlines
               </option>
-              <option value="Japan">Japan</option>
-              <option value="Hawai">Hawai</option>
-              <option value="Dubai">Dubai</option>
+              <option value="Japan">JetSpice</option>
+              <option value="Hawai">Air India</option>
+             
             </select>
             <select
               name="class"

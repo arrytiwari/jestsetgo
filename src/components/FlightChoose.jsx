@@ -19,7 +19,7 @@ import flightData from "../../flights.json";
 const FlightChoose = () => {
   const [priceShown, setPriceShow] = useState(true);
 
-  const { date, source, destination,airline } = useFilterContext();
+  const { date, source, destination } = useFilterContext();
   const [flightsData, setFlightsData] = useState([]);
   const [currentFlight, setCurrentFlight] = useState(null);
  
@@ -43,11 +43,7 @@ const FlightChoose = () => {
         const isMatchingDestination = destination
           ? flight.displayData.destination.airport.cityName.toLowerCase() === destination.toLowerCase()
           : true;
-          const isMatchingAirline = airline
-          ? (flight.displayData.airlines || []).some((
-              (airline1) => airline1.airlineName.toLowerCase() === airline.toLowerCase()
-            ))
-          : true;
+       
         
         // console.log(
         //   flight.displayData.source.airport.cityName,
@@ -66,11 +62,11 @@ const FlightChoose = () => {
         // const isMatchingDestinationDate = date[1] ? flight.displayData.destination.arrTime.includes(date[1]) : true;
 
         // Return flights where all conditions are true
-        return isMatchingSource && isMatchingDestination && isMatchingAirline;
+        return isMatchingSource && isMatchingDestination ;
       });
       setFlightsData(filteredFlights);
     }
-  }, [destination, source ,airline]);
+  }, [destination, source ]);
 
   return (
     <>

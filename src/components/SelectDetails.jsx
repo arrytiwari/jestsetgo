@@ -9,10 +9,10 @@ import { useFilterContext } from "../container/provider/conntextprovider";
 
 const SelectDetails = () => {
   const [openDate, setOpenDate] = useState(false);
-  const {date,setDate,setSource,setDestination,destination,source,airline,setAirline} = useFilterContext();
+  const {date,setDate,setSource,setDestination,destination,source} = useFilterContext();
   const [localSource, setLocalSource] = useState(source);
   const [localDestination, setLocalDestination] = useState(destination);
-  const [localAirline, setLocalAirline] = useState(airline);
+  
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
@@ -169,8 +169,7 @@ const SelectDetails = () => {
             <select
               name="airlines"
               id="airlines"
-              value={localAirline}
-  onChange={(e) => setLocalAirline(e.target.value)}
+             
               className="border-[1px] border-[#CBD4E6] bg-white text-[#27273F] p-1 cursor-pointer"
             >
               <option value="airlines" className="">

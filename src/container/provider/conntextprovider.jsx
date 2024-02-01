@@ -15,7 +15,7 @@ export default function ContextProvider({ children }) {
       key: "selection",
     },
   ]);
-  const [airline, setAirline] = useState("");
+  
   const value = {
     destination,
     setDestination,
@@ -23,8 +23,7 @@ export default function ContextProvider({ children }) {
     setSource,
     date,
     setDate,
-    airline,
-     setAirline
+    
   };
   console.log(date, destination, source);
   return (
